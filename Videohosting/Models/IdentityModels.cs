@@ -26,6 +26,7 @@ namespace Videohosting.Models
         }
 
         public DbSet<Video> Videos { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public static ApplicationDbContext Create()
         {
