@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string FilePath { get; set; }
         // Id of the user that uploaded the video.
         public int UserId { get; set; }
         public int LikesCount { get; set; }
