@@ -10,7 +10,8 @@ namespace Videohosting.Controllers
     public class VideoController : Controller
     {
         // GET: Video/video
-        public ActionResult Index(string filePath = "1.mp4")
+        [Authorize(Roles = "User")]
+        public ActionResult Index(string filePath)
         {
             return new VideoResult(filePath);
         }

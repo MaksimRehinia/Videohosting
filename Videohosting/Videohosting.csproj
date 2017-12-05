@@ -201,9 +201,14 @@
     <Compile Include="Migrations\201711301840266_InitialCreate.Designer.cs">
       <DependentUpon>201711301840266_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712051355137_AddCommentEntity.cs" />
+    <Compile Include="Migrations\201712051355137_AddCommentEntity.Designer.cs">
+      <DependentUpon>201712051355137_AddCommentEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Video.cs" />
@@ -288,6 +293,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201711301840266_InitialCreate.resx">
       <DependentUpon>201711301840266_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712051355137_AddCommentEntity.resx">
+      <DependentUpon>201712051355137_AddCommentEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
