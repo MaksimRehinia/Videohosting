@@ -58,11 +58,11 @@ namespace Videohosting
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "118739735505-2fvv501t53paodufj2am3q33rpkrrn5b.apps.googleusercontent.com",
+                ClientSecret = "dbCslv4iBKHiWOkPuIm6JIWJ"
+            });
         }
     }
 }
