@@ -1,10 +1,12 @@
 ﻿using System;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
+using Owin.Security.Providers.VKontakte;
 using Videohosting.Models;
 
 namespace Videohosting
@@ -63,6 +65,9 @@ namespace Videohosting
                 ClientId = "118739735505-2fvv501t53paodufj2am3q33rpkrrn5b.apps.googleusercontent.com",
                 ClientSecret = "dbCslv4iBKHiWOkPuIm6JIWJ"
             });
+
+            app.UseVKontakteAuthentication("6289716", "7wBBcPTbJfxxbXFPil7K");
+
         }
     }
 }
