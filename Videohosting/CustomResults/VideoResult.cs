@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.IO;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using RestSharp.Extensions;
 
 namespace Videohosting.CustomResults
 {
@@ -19,7 +16,7 @@ namespace Videohosting.CustomResults
 
 
         /// <summary> 
-        /// The below method will respond with the Video file 
+        /// The below method will respond with the Video file.
         /// </summary> 
         /// <param name="context"></param> 
         public override void ExecuteResult(ControllerContext context)
@@ -30,9 +27,10 @@ namespace Videohosting.CustomResults
             if (file.Exists)
             {
                 var stream = file.OpenRead();
-                var bytesinfile = new byte[stream.Length];
-                stream.Read(bytesinfile, 0, (int)file.Length);
-                context.HttpContext.Response.BinaryWrite(bytesinfile);
+                //var bytesinfile = new byte[stream.Length];
+                //stream.Read(bytesinfile, 0, (int)file.Length);
+                //context.HttpContext.Response.BinaryWrite(bytesinfile);
+                context.HttpContext.Response.BinaryWrite(stream.ReadAsBytes());
             }
         }
     }
