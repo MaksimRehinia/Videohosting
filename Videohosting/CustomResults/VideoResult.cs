@@ -1,19 +1,17 @@
 ﻿using System.IO;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using RestSharp.Extensions;
 
 namespace Videohosting.CustomResults
 {
     public class VideoResult : ActionResult
     {
-        private readonly string filePath;
+        private readonly string _filePath;
 
         public VideoResult(string filePath)
         {
-            this.filePath = filePath;
+            _filePath = filePath;
         }
-
 
         /// <summary> 
         /// The below method will respond with the Video file.
@@ -21,16 +19,14 @@ namespace Videohosting.CustomResults
         /// <param name="context"></param> 
         public override void ExecuteResult(ControllerContext context)
         {
-            var videoFilePath = HostingEnvironment.MapPath("~/App_Data/Videos/" + filePath);
-            context.HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=" + filePath);
-            var file = new FileInfo(videoFilePath);
-            if (file.Exists)
+            var videoFilePath = HostingEnvironment.MapPath("~/App_Data/Videos/" + _filePath);
+            if (File.Exists(videoFilePath))
             {
-                var stream = file.OpenRead();
-                //var bytesinfile = new byte[stream.Length];
-                //stream.Read(bytesinfile, 0, (int)file.Length);
-                //context.HttpContext.Response.BinaryWrite(bytesinfile);
-                context.HttpContext.Response.BinaryWrite(stream.ReadAsBytes());
+                context.HttpContext.Response.Clear();
+                context.HttpContext.Response.ContentType = "application/octet-stream";
+                context.HttpContext.Response.AppendHeader("Content-Disposition", "filename=" + _filePath);
+                context.HttpContext.Response.TransmitFile(videoFilePath);
+                context.HttpContext.Response.End();
             }
         }
     }

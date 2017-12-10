@@ -1,4 +1,5 @@
-﻿@model List<Videohosting.Models.Video>
+﻿@using System.Web.Hosting
+@model List<Videohosting.Models.Video>
 
 @{
     ViewBag.Title = "Home Page";
@@ -7,26 +8,32 @@
 
 
 @if (Model?.Count > 0)
-{   
-    for (int j = 0; j < Model.Count; j+=3)
+{
+    int j = 0;
+    while (j < Model.Count) 
     {
+        int k = j - 1;
          <div class ="row">
-             @for(int i = j; i < Model.Count; i++)
-             {
-                 <div class="col-md-4">
-                     <p>@Html.DisplayFor(modelItem => Model[i].Title)</p>
-                     <a href="@Url.Action("Display", "Video", new {name = Model[i].FilePath})" type="video/mp4">
-                         <video style="outline: none; width: 100%;">
-                             <source src="@Url.Action("ShowVideo", "Video", new {filePath = Model[i].FilePath})" type="video/mp4">
-                         </video>
-                     </a>
-                 </div>
-                 
-                 if (i % 3 == 2)
-                 {
-                     break;
-                 }
-             }
+            @for(int i = j; i < Model.Count; i++)
+            {                 
+                if (File.Exists(HostingEnvironment.MapPath(@"~/App_Data/Videos/" + Model[i].FilePath)))
+                {
+                    <div class="col-md-4">
+                        <p>@Html.DisplayFor(modelItem => Model[i].Title)</p>
+                        <a href="@Url.Action("Display", "Video", new {name = Model[i].FilePath})" type="video/mp4">
+                            <video style="outline: none; width: 100%;">
+                                <source src="@Url.Action("ShowVideo", "Video", new {filePath = Model[i].FilePath})" type="video/mp4">
+                            </video>
+                        </a>
+                    </div>
+                    k++;
+                }
+                j++;
+                if (k % 3 == 2)
+                {
+                    break;
+                }
+            }
          </div>
      }
 }

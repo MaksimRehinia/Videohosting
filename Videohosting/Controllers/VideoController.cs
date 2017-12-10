@@ -12,11 +12,14 @@ namespace Videohosting.Controllers
 {
     public class VideoController : Controller
     {
-        // GET: Video/   
-        
+        // GET: Video/           
         public ActionResult Index()
         {
-            return View(new ApplicationDbContext().Videos.ToList().Where(video => video.User.Id == User.Identity.GetUserId()).ToList());
+            return View(new ApplicationDbContext()
+                .Videos
+                .ToList()
+                .Where(video => video.User.Id == User.Identity.GetUserId())
+                .ToList());
         }
 
         // GET: Video/video   
@@ -24,7 +27,6 @@ namespace Videohosting.Controllers
         {
             return new VideoResult(filePath);
         }
-
         
         public ActionResult Display(string name)
         {
@@ -37,7 +39,7 @@ namespace Videohosting.Controllers
             Comment comment;
             using (var db = new ApplicationDbContext())
             {
-                comment = new Comment()
+                comment = new Comment
                 {
                     Message = message,
                     Video = db.Videos.First(video => video.Title == name),
@@ -67,14 +69,17 @@ namespace Videohosting.Controllers
                 var fileName = Path.GetFileName(upload.FileName);
                 upload.SaveAs(Server.MapPath("~/App_Data/Videos/" + fileName));
 
-                var db = new ApplicationDbContext();
 
-                var user = db.Users.FirstOrDefault(usr => usr.UserName == System.Web.HttpContext.Current.User.Identity.Name);
-                video.User = user ?? throw new NotImplementedException();
-                video.FilePath = fileName;
-                db.Entry(video).State = EntityState.Added;
+                using (var db = new ApplicationDbContext())
+                {
+                    var user = db.Users.FirstOrDefault(usr =>
+                        usr.UserName == System.Web.HttpContext.Current.User.Identity.Name);
+                    video.User = user;
+                    video.FilePath = fileName;
+                    db.Entry(video).State = EntityState.Added;
 
-                db.SaveChanges();
+                    db.SaveChanges();
+                }
             }
 
             return RedirectToAction("Index");
