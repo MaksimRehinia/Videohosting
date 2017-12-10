@@ -24,14 +24,18 @@
         </tr>
     }
 }
-<div>
-@using (Ajax.BeginForm("ViewMore", new AjaxOptions { UpdateTargetId = "results" }))
-{
-    <input type="submit" value="More" />
-}
 
 <div id="results"></div>
+
+<div id ="button">
+    @using (Ajax.BeginForm("ViewMore", new AjaxOptions { UpdateTargetId = "results", InsertionMode = InsertionMode.InsertAfter }))
+    {
+        <input type="submit" value="More" />
+    }
+
 </div>
+
+
 
 @Scripts.Render("~/scripts/jquery-1.10.2.min.js")
 @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")

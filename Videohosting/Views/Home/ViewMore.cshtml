@@ -21,11 +21,3 @@
         }
     }
 </table>
-<div>
-@using (Ajax.BeginForm("ViewMore", new AjaxOptions { UpdateTargetId = @"results", InsertionMode = InsertionMode.InsertAfter}))
-{
-    <input type="submit" value="More" />
-}
-
-<div id="results"></div>
-</div>

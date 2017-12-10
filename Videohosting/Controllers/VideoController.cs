@@ -12,21 +12,18 @@ namespace Videohosting.Controllers
 {
     public class VideoController : Controller
     {
-        // GET: Video/   
-        [Authorize(Roles = "User")]
+        // GET: Video/       
         public ActionResult Index()
         {
             return View(new ApplicationDbContext().Videos.ToList());
         }
 
         // GET: Video/video  
-        [Authorize(Roles = "User")]
         public ActionResult ShowVideo(string filePath)
         {
             return new VideoResult(filePath);
         }
 
-        
         public ActionResult Display(string name)
         {
             return View(new ApplicationDbContext().Videos.First(video => video.FilePath == name));
