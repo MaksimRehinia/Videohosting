@@ -1,10 +1,50 @@
-﻿@model Videohosting.Models.Video
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Videohosting.Models.Video
     
 <h1>@Model.Title</h1>
+<div class ="row">
+    <video style="outline: none; width: 60%;" controls="controls">
+        <source src="@Url.Action("ShowVideo", "Video", new {filePath = Model.FilePath})" type="video/mp4">
+    </video>
+</div>
 
-<video style="outline: none; width: 60%;" controls="controls">
-    <source src="@Url.Action("ShowVideo", "Video", new {filePath = Model.FilePath})" type="video/mp4">
-</video>
+<div class="row">
+    <p>@Model.Description</p>
+</div>
 
-<h1>@Model.Description</h1>
 
+
+<div class="comments">
+    
+    <div id="button">
+        @using (Ajax.BeginForm("AddComment", new AjaxOptions { UpdateTargetId = @"ajax-comment", InsertionMode = InsertionMode.InsertBefore }))
+        {
+            <input type="hidden" name="name" value="@Model.Title" />
+            <input type="text" name="message" />
+            <input type="submit" value="Submit" />
+        }
+    </div>
+
+    <div class="row">
+        <div id="ajax-comment"> </div>
+    </div> 
+    
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="">
+            <p>@comment.User.UserName</p>
+            <p>@comment.Message</p>
+        </div>
+    }
+
+
+</div>
+
+
+
+@Scripts.Render("~/scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")

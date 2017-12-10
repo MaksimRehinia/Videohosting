@@ -12,21 +12,42 @@ namespace Videohosting.Controllers
 {
     public class VideoController : Controller
     {
-        // GET: Video/       
+        // GET: Video/   
+        
         public ActionResult Index()
         {
-            return View(new ApplicationDbContext().Videos.ToList());
+            return View(new ApplicationDbContext().Videos.ToList().Where(video => video.User.Id == User.Identity.GetUserId()).ToList());
         }
 
-        // GET: Video/video  
+        // GET: Video/video   
         public ActionResult ShowVideo(string filePath)
         {
             return new VideoResult(filePath);
         }
 
+        
         public ActionResult Display(string name)
         {
-            return View(new ApplicationDbContext().Videos.First(video => video.FilePath == name));
+            return PartialView(new ApplicationDbContext().Videos.First(video => video.FilePath == name));
+        }
+
+        [Authorize(Roles = "User")]
+        public ActionResult AddComment(string message, string name)
+        {
+            Comment comment;
+            using (var db = new ApplicationDbContext())
+            {
+                comment = new Comment()
+                {
+                    Message = message,
+                    Video = db.Videos.First(video => video.Title == name),
+                    User = db.Users.First(usr => usr.UserName == System.Web.HttpContext.Current.User.Identity.Name)
+                };
+                db.Comments.Add(comment);
+                db.SaveChanges();
+            }
+
+            return PartialView(comment);
         }
 
         // GET: Video/video 

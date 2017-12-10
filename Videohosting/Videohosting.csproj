@@ -219,6 +219,10 @@
     <Compile Include="Migrations\201712051355137_AddCommentEntity.Designer.cs">
       <DependentUpon>201712051355137_AddCommentEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712101825209_Add setter to comment%27s message.cs" />
+    <Compile Include="Migrations\201712101825209_Add setter to comment%27s message.Designer.cs">
+      <DependentUpon>201712101825209_Add setter to comment%27s message.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
@@ -293,6 +297,7 @@
     <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Home\ViewMore.cshtml" />
     <Content Include="Views\Video\Display.cshtml" />
+    <Content Include="Views\Video\AddComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -316,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712051355137_AddCommentEntity.resx">
       <DependentUpon>201712051355137_AddCommentEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712101825209_Add setter to comment%27s message.resx">
+      <DependentUpon>201712101825209_Add setter to comment%27s message.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
