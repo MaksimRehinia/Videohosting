@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Videohosting.CustomResults;
+using Videohosting.Models;
 
 namespace Videohosting.Controllers
 {
@@ -11,7 +12,7 @@ namespace Videohosting.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(new ApplicationDbContext().Videos.ToList());
         }
 
         public ActionResult About()

@@ -16,7 +16,7 @@ namespace Videohosting.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
-            return View();
+            return View(new ApplicationDbContext().Videos.ToList());
         }
 
         // GET: Video/video  
