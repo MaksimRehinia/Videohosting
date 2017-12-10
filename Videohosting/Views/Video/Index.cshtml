@@ -18,24 +18,25 @@
         <th>Video</th>
     </tr>
     
-@if (Model?.Count() > 0)
-{
-    foreach (var item in Model)
-     {
-         if (item.User.UserName == User.Identity.GetUserName())
-         {
-             <tr>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Title)
-                 </td>
-                 <td>
-                     <video style="outline: none; width: 60%;" controls="controls">
-                         <source src="@Url.Action("ShowVideo", "Video", new {filePath = item.FilePath})" type="video/mp4">
-                     </video>
-                 </td>
-             </tr>
-         }
-     }
-}
+    @if (Model?.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            if (item.User.UserName == User.Identity.GetUserName())
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Display", "Video", new {name = item.FilePath})" type="video/mp4">
+                            <video style="outline: none; width: 60%;" >
+                                <source src="@Url.Action("ShowVideo", "Video", new {filePath = item.FilePath})" type="video/mp4">
+                            </video>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    }
 </table>
-

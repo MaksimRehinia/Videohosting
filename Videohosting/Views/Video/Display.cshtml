@@ -1,0 +1,10 @@
+﻿@model Videohosting.Models.Video
+    
+<h1>@Model.Title</h1>
+
+<video style="outline: none; width: 60%;" controls="controls">
+    <source src="@Url.Action("ShowVideo", "Video", new {filePath = Model.FilePath})" type="video/mp4">
+</video>
+
+<h1>@Model.Description</h1>
+

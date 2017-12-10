@@ -26,6 +26,12 @@ namespace Videohosting.Controllers
             return new VideoResult(filePath);
         }
 
+        
+        public ActionResult Display(string name)
+        {
+            return View(new ApplicationDbContext().Videos.First(video => video.FilePath == name));
+        }
+
         // GET: Video/video 
         [Authorize(Roles = "User")]
         public ActionResult Upload()

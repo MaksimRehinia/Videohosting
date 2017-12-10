@@ -12,7 +12,7 @@ namespace Videohosting.Controllers
     {
         public ActionResult Index()
         {
-            return View(new ApplicationDbContext().Videos.ToList());
+            return PartialView(new ApplicationDbContext().Videos.ToList());
         }
 
         public ActionResult About()
@@ -27,6 +27,12 @@ namespace Videohosting.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult ViewMore()
+        {
+            var db = new ApplicationDbContext();
+            return PartialView(db.Videos.ToList());
         }
     }
 }
