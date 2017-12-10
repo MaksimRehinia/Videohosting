@@ -1,0 +1,43 @@
+﻿@model Videohosting.Models.Video
+
+@{
+    ViewBag.Title = "Upload new video";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>Choose videofile to upload:</h3>
+
+@using (Html.BeginForm("Upload", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Add video</legend>
+
+        <div>Title</div>
+        @Html.TextBoxFor(m => m.Title, new { required = "required"})
+        
+        <div>Description</div>
+        @Html.TextAreaFor(m => m.Description, new { maxlength = "5000", required = "required" })
+                        
+        <label class="btn btn-default btn-file">
+            Browse <input type="file" name="upload" style="display: none;">
+        </label> 
+
+        <p>
+            <input type="submit" value="Upload" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Вернуться к списку", "Index")
+</div>
+
+
+<!--using (Html.BeginForm("Upload", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label class="btn btn-default btn-file">
+        Browse <input type="file" name="upload" style="display: none;">
+    </label>    
+    <input type="submit" value="Upload" />
+}
+-->

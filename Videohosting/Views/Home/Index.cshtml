@@ -1,12 +1,23 @@
-﻿@model Videohosting.Models.Video
+﻿@model Videohosting.Models.ApplicationDbContext
+
 @{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (User.IsInRole("User"))
+@if (Model?.Videos?.Count() > 0)
 {
-    
+    foreach (var item in Model.Videos.ToList())
+    {
+         <tr>
+             <td>
+                 @Html.DisplayFor(modelItem => item.Title)
+             </td>
+             <td>
+                 <video style="outline: none; width: 60%;" controls="controls">
+                     <source src="@Url.Action("ShowVideo", "Video", new {filePath = item.FilePath})" type="video/mp4">
+                 </video>
+             </td>
+         </tr>
+     }
 }
-<video style="outline:none; width: 60%;" > 
-<source src="@Url.Action("Index","Video", new {filePath="1.mp4"})" type="video/mp4"> 
-</video>
