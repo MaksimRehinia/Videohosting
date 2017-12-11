@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using RestSharp.Extensions;
 using Videohosting.CustomResults;
 using Videohosting.Models;
 
@@ -23,14 +23,14 @@ namespace Videohosting.Controllers
         }
 
         // GET: Video/video   
-        public ActionResult ShowVideo(string filePath)
+        public ActionResult ShowVideo(int id)
         {
-            return new VideoResult(filePath);
+            return new VideoResult(id);
         }
         
-        public ActionResult Display(string name)
+        public ActionResult Display(int id)
         {
-            return PartialView(new ApplicationDbContext().Videos.First(video => video.FilePath == name));
+            return PartialView(new ApplicationDbContext().Videos.FirstOrDefault(video => video.Id == id));
         }
 
         [Authorize(Roles = "User")]
@@ -58,23 +58,24 @@ namespace Videohosting.Controllers
         {
             return View();
         }
-
+        
         // POST: Video/video
         [HttpPost]
         [Authorize(Roles = "User")]
-        public ActionResult Upload(Video video, HttpPostedFileBase upload)
+        public ActionResult Upload(Video video, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid && upload != null)
+            if (ModelState.IsValid && file != null)
             {                              
-                var fileName = Path.GetFileName(upload.FileName);
-                upload.SaveAs(Server.MapPath("~/App_Data/Videos/" + fileName));
+                var fileName = Path.GetFileName(file.FileName);
 
+                var stream = file.InputStream;
 
                 using (var db = new ApplicationDbContext())
                 {
                     var user = db.Users.FirstOrDefault(usr =>
                         usr.UserName == System.Web.HttpContext.Current.User.Identity.Name);
                     video.User = user;
+                    video.ContentBytes = stream.ReadAsBytes();
                     video.FilePath = fileName;
                     db.Entry(video).State = EntityState.Added;
 

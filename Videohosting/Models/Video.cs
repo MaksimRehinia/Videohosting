@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Videohosting.Models
 {
@@ -8,6 +7,7 @@ namespace Videohosting.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public byte[] ContentBytes { get; set; }
         public string FilePath { get; set; }                
         public int LikesCount { get; set; }
         public int DislikesCount { get; set; }

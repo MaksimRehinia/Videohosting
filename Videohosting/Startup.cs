@@ -2,6 +2,7 @@
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(Videohosting.Startup))]
+
 namespace Videohosting
 {
     public partial class Startup
@@ -9,6 +10,6 @@ namespace Videohosting
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-        }
-    }
+        }        
+    }        
 }

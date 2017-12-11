@@ -1,16 +1,16 @@
-﻿using System.IO;
-using System.Web.Hosting;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Videohosting.Models;
 
 namespace Videohosting.CustomResults
 {
     public class VideoResult : ActionResult
     {
-        private readonly string _filePath;
+        private readonly int _id;
 
-        public VideoResult(string filePath)
+        public VideoResult(int id)
         {
-            _filePath = filePath;
+            _id = id;
         }
 
         /// <summary> 
@@ -19,15 +19,18 @@ namespace Videohosting.CustomResults
         /// <param name="context"></param> 
         public override void ExecuteResult(ControllerContext context)
         {
-            var videoFilePath = HostingEnvironment.MapPath("~/App_Data/Videos/" + _filePath);
-            if (File.Exists(videoFilePath))
+            using (var db = new ApplicationDbContext())
             {
-                context.HttpContext.Response.Clear();
-                context.HttpContext.Response.ContentType = "application/octet-stream";
-                context.HttpContext.Response.AppendHeader("Content-Disposition", "filename=" + _filePath);
-                context.HttpContext.Response.TransmitFile(videoFilePath);
-                context.HttpContext.Response.End();
-            }
+                var video = db.Videos.FirstOrDefault(item => item.Id == _id);
+                if (!ReferenceEquals(video, null))
+                {
+                    context.HttpContext.Response.Clear();
+                    context.HttpContext.Response.ContentType = "video/mp4";
+                    context.HttpContext.Response.AppendHeader("Content-Disposition", "filename=" + video.FilePath);
+                    context.HttpContext.Response.BinaryWrite(video.ContentBytes);
+                    context.HttpContext.Response.End();
+                }
+            }            
         }
     }
 }

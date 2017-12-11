@@ -1,30 +1,21 @@
-﻿@using System.Web.Hosting
-@using Microsoft.AspNet.Identity
-@model System.Collections.Generic.List<Videohosting.Models.Video>
+﻿@model List<Videohosting.Models.Video>
 
 @if (Model?.Count > 0)
 {
-    int j = 0;
-    while (j < Model.Count)
+    for (int j = 0; j < Model.Count; j += 3)
     {
-        int k = j - 1;
         <div class ="row">
-            @for(int i = j; i < Model.Count; i++)
+            @for (int i = j; i < Model.Count; i++)
             {
-                if (File.Exists(HostingEnvironment.MapPath(@"~/App_Data/Videos/" + Model[i].FilePath)))
-                {
-                    <div class="col-md-4">
-                        <p>@Html.DisplayFor(modelItem => Model[i].Title)</p>
-                        <a href="@Url.Action("Display", "Video", new {name = Model[i].FilePath})" type="video/mp4">
-                            <video style="outline: none; width: 100%;">
-                                <source src="@Url.Action("ShowVideo", "Video", new {filePath = Model[i].FilePath})" type="video/mp4">
-                            </video>
-                        </a>
-                    </div>
-                    k++;
-                }
-                j++;
-                if (k % 3 == 2)
+                <div class="col-md-4">
+                    <p>@Html.DisplayFor(modelItem => Model[i].Title)</p>
+                    <a href="@Url.Action("Display", "Video", new {id = Model[i].Id})" type="video/mp4">
+                        <video style="outline: none; width: 100%;">
+                            <source src="@Url.Action("ShowVideo", "Video", new {id = Model[i].Id})" type="video/mp4">
+                        </video>
+                    </a>
+                </div>                                                    
+                if (i % 3 == 2)
                 {
                     break;
                 }

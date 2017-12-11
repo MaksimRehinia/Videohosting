@@ -18,14 +18,12 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort>44372</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>
-    </IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>
-    </IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>
-    </IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -223,6 +221,10 @@
     <Compile Include="Migrations\201712101825209_Add setter to comment%27s message.Designer.cs">
       <DependentUpon>201712101825209_Add setter to comment%27s message.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712111740301_Add ContentBytes to Video entity..cs" />
+    <Compile Include="Migrations\201712111740301_Add ContentBytes to Video entity..Designer.cs">
+      <DependentUpon>201712111740301_Add ContentBytes to Video entity..cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
@@ -298,6 +300,7 @@
     <Content Include="Views\Home\ViewMore.cshtml" />
     <Content Include="Views\Video\Display.cshtml" />
     <Content Include="Views\Video\AddComment.cshtml" />
+    <Content Include="Views\Shared\DisplayVideos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -324,6 +327,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712101825209_Add setter to comment%27s message.resx">
       <DependentUpon>201712101825209_Add setter to comment%27s message.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712111740301_Add ContentBytes to Video entity..resx">
+      <DependentUpon>201712111740301_Add ContentBytes to Video entity..cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

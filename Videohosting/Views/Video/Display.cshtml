@@ -8,15 +8,13 @@
 <h1>@Model.Title</h1>
 <div class ="row">
     <video style="outline: none; width: 60%;" controls="controls">
-        <source src="@Url.Action("ShowVideo", "Video", new {filePath = Model.FilePath})" type="video/mp4">
+        <source src="@Url.Action("ShowVideo", "Video", new {id = Model.Id})" type="video/mp4">
     </video>
 </div>
 
 <div class="row">
     <p>@Model.Description</p>
 </div>
-
-
 
 <div class="comments">
     
@@ -40,10 +38,7 @@
             <p>@comment.Message</p>
         </div>
     }
-
-
 </div>
-
 
 
 @Scripts.Render("~/scripts/jquery-1.10.2.min.js")
