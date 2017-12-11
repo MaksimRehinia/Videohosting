@@ -1,34 +1,6 @@
-﻿@model List<Videohosting.Models.Video>
-
-@{
+﻿@{
     ViewBag.Title = "Home Page";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-
-@if (Model?.Count > 0)
-{   
-    for (int j = 0; j < Model.Count; j+=3)
-    {
-         <div class ="row">
-             @for(int i = j; i < Model.Count; i++)
-             {
-                 <div class="col-md-4">
-                     <p>@Html.DisplayFor(modelItem => Model[i].Title)</p>
-                     <a href="@Url.Action("Display", "Video", new {name = Model[i].FilePath})" type="video/mp4">
-                         <video style="outline: none; width: 100%;">
-                             <source src="@Url.Action("ShowVideo", "Video", new {filePath = Model[i].FilePath})" type="video/mp4">
-                         </video>
-                     </a>
-                 </div>
-                 
-                 if (i % 3 == 2)
-                 {
-                     break;
-                 }
-             }
-         </div>
-     }
+    Layout = "~/Views/Shared/DisplayVideos.cshtml";
 }
 
 <div id="results"></div>

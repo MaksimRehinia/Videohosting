@@ -3,41 +3,44 @@
 @{
     ViewBag.Title = "Upload new video";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
-<h3>Choose videofile to upload:</h3>
+<h3>Add video</h3>
 
-@using (Html.BeginForm("Upload", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Add video</legend>
-
-        <div>Title</div>
-        @Html.TextBoxFor(m => m.Title, new { required = "required"})
-        
-        <div>Description</div>
-        @Html.TextAreaFor(m => m.Description, new { maxlength = "5000", required = "required" })
-                        
-        <label class="btn btn-default btn-file">
-            Browse <input type="file" name="upload" style="display: none;">
-        </label> 
-
-        <p>
-            <input class ="" type="submit" value="Upload" />
-        </p>
-    </fieldset>
-}
-
-<div>
-    @Html.ActionLink("Вернуться к списку", "Index")
+<div class="row">
+    <div class="col-md-8">        
+        @using (Html.BeginForm("Upload", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {                        
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", required = "required", maxlength = "500" })
+                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>            
+            <p>
+                <div >
+                    <input type="file" value="Brouse" name="file" id="file" class="btn btn-file" required />
+                </div>                
+            </p>
+            <p>
+                <div >
+                    <input type="submit" value="Upload" name="upload" id="upload" class="btn btn-default" />
+                </div>
+            </p>
+            <p>
+                @Html.ActionLink("Back to channel", "Index")
+            </p>
+        }
+    </div>    
 </div>
-
-
-<!--using (Html.BeginForm("Upload", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <label class="btn btn-default btn-file">
-        Browse <input type="file" name="upload" style="display: none;">
-    </label>    
-    <input type="submit" value="Upload" />
-}
--->

@@ -1,19 +1,17 @@
-﻿using System.IO;
-using System.Web.Hosting;
+﻿using System.Linq;
 using System.Web.Mvc;
-using RestSharp.Extensions;
+using Videohosting.Models;
 
 namespace Videohosting.CustomResults
 {
     public class VideoResult : ActionResult
     {
-        private readonly string filePath;
+        private readonly int _id;
 
-        public VideoResult(string filePath)
+        public VideoResult(int id)
         {
-            this.filePath = filePath;
+            _id = id;
         }
-
 
         /// <summary> 
         /// The below method will respond with the Video file.
@@ -21,17 +19,18 @@ namespace Videohosting.CustomResults
         /// <param name="context"></param> 
         public override void ExecuteResult(ControllerContext context)
         {
-            var videoFilePath = HostingEnvironment.MapPath("~/App_Data/Videos/" + filePath);
-            context.HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=" + filePath);
-            var file = new FileInfo(videoFilePath);
-            if (file.Exists)
+            using (var db = new ApplicationDbContext())
             {
-                var stream = file.OpenRead();
-                //var bytesinfile = new byte[stream.Length];
-                //stream.Read(bytesinfile, 0, (int)file.Length);
-                //context.HttpContext.Response.BinaryWrite(bytesinfile);
-                context.HttpContext.Response.BinaryWrite(stream.ReadAsBytes());
-            }
+                var video = db.Videos.FirstOrDefault(item => item.Id == _id);
+                if (!ReferenceEquals(video, null))
+                {
+                    context.HttpContext.Response.Clear();
+                    context.HttpContext.Response.ContentType = "video/mp4";
+                    context.HttpContext.Response.AppendHeader("Content-Disposition", "filename=" + video.FilePath);
+                    context.HttpContext.Response.BinaryWrite(video.ContentBytes);
+                    context.HttpContext.Response.End();
+                }
+            }            
         }
     }
 }

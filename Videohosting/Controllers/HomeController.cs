@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using Videohosting.CustomResults;
 using Videohosting.Models;
 
 namespace Videohosting.Controllers
@@ -16,23 +12,18 @@ namespace Videohosting.Controllers
         }
 
         public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
+        {            
             return View();
         }
 
         public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+        {            
             return View();
         }
 
         public ActionResult ViewMore()
-        {
-            var db = new ApplicationDbContext();
-            return PartialView(db.Videos.ToList());
+        {            
+            return PartialView(new ApplicationDbContext().Videos.ToList());
         }
     }
 }
