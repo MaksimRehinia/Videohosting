@@ -2,35 +2,14 @@
 
 @{
     ViewBag.Title = "My channel";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_DisplayVideos.cshtml";
 }
 
-<h2>My videos</h2>
-
-<p>
-    @Html.ActionLink("Upload new video", "Upload", "Video")
-</p>
-
-@if (Model?.Count > 0)
+@section BeforeDisplaying
 {
-    for (int j = 0; j < Model.Count; j += 3)
-    {
-        <div class ="row">
-            @for (int i = j; i < Model.Count; i++)
-            {
-                <div class="col-md-4">
-                    <p>@Html.DisplayFor(modelItem => Model[i].Title)</p>
-                    <a href="@Url.Action("Display", "Video", new {id = Model[i].Id})" type="video/mp4">
-                        <video style="outline: none; width: 100%;">
-                            <source src="@Url.Action("ShowVideo", "Video", new {id = Model[i].Id})" type="video/mp4">
-                        </video>
-                    </a>
-                </div>                                                    
-                if (i % 3 == 2)
-                {
-                    break;
-                }
-            }
-        </div>
-    }
+    <h2>My videos</h2>
+
+    <p>
+        @Html.ActionLink("Upload new video", "Upload", "Video")
+    </p>
 }
