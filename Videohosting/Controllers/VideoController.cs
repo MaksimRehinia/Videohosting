@@ -12,16 +12,6 @@ namespace Videohosting.Controllers
 {
     public class VideoController : Controller
     {
-        // GET: Video/           
-        public ActionResult Index()
-        {
-            return View(new ApplicationDbContext()
-                .Videos
-                .ToList()
-                .Where(video => video.User.Id == User.Identity.GetUserId())
-                .ToList());
-        }
-
         // GET: Video/video   
         public ActionResult ShowVideo(int id)
         {
@@ -72,9 +62,9 @@ namespace Videohosting.Controllers
 
                 using (var db = new ApplicationDbContext())
                 {
-                    var user = db.Users.FirstOrDefault(usr =>
-                        usr.UserName == System.Web.HttpContext.Current.User.Identity.Name);
-                    video.User = user;
+                    var chanel = db.Chanels.FirstOrDefault(temp =>
+                        temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name);
+                    video.Chanel = chanel;
                     video.ContentBytes = stream.ReadAsBytes();
                     video.FilePath = fileName;
                     db.Entry(video).State = EntityState.Added;
@@ -83,7 +73,7 @@ namespace Videohosting.Controllers
                 }
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Chanel");
         }
     }
 }

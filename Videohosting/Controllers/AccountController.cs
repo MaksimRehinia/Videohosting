@@ -164,6 +164,13 @@ namespace Videohosting.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                using (var db = new ApplicationDbContext())
+                {
+                    db.Chanels.Add(new Chanel()
+                    {
+                        User = user
+                    });
+                }
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "User");
@@ -381,10 +388,18 @@ namespace Videohosting.Controllers
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
+                using (var db = new ApplicationDbContext())
+                {
+                    db.Chanels.Add(new Chanel()
+                    {
+                        User = user
+                    });
+                }
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "User");
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

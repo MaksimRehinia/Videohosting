@@ -20,7 +20,7 @@ namespace Videohosting.Models
 
         public int ViewsCount { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual Chanel Chanel { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }

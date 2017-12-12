@@ -26,6 +26,7 @@ namespace Videohosting.Models
             string password_2 = "gasyulchik";
 
             var result = userManager.Create(admin_1, password_1);
+            
             if (result.Succeeded)
             {
                 userManager.AddToRole(admin_1.Id, roleUser.Name);

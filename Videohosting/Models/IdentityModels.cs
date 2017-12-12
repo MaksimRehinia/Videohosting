@@ -12,6 +12,7 @@ namespace Videohosting.Models
     {
         public int VideosCount { get; set; }
         public virtual ICollection<Video> Videos { get; set; }
+        public virtual ICollection<Chanel> Chanels { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -31,6 +32,7 @@ namespace Videohosting.Models
 
         public DbSet<Video> Videos { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Chanel> Chanels { get; set; }
 
         public static ApplicationDbContext Create()
         {

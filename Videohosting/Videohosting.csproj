@@ -18,12 +18,14 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44372</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>
+    </IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -202,8 +204,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChanelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SubscribesController.cs" />
     <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="CustomResults\VideoResult.cs" />
     <Compile Include="Global.asax.cs">
@@ -229,9 +233,18 @@
     <Compile Include="Migrations\201712121905317_Remove validation attributes.Designer.cs">
       <DependentUpon>201712121905317_Remove validation attributes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712121953336_Add Subscribes to user.cs" />
+    <Compile Include="Migrations\201712121953336_Add Subscribes to user.Designer.cs">
+      <DependentUpon>201712121953336_Add Subscribes to user.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712122158134_Add Chanel entity.cs" />
+    <Compile Include="Migrations\201712122158134_Add Chanel entity.Designer.cs">
+      <DependentUpon>201712122158134_Add Chanel entity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
+    <Compile Include="Models\Chanel.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -300,11 +313,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Video\Upload.cshtml" />
-    <Content Include="Views\Video\Index.cshtml" />
     <Content Include="Views\Home\ViewMore.cshtml" />
     <Content Include="Views\Video\Display.cshtml" />
     <Content Include="Views\Video\AddComment.cshtml" />
     <Content Include="Views\Shared\_DisplayVideos.cshtml" />
+    <Content Include="Views\Subscribes\Index.cshtml" />
+    <Content Include="Views\Chanel\Index.cshtml" />
+    <Content Include="Views\Chanel\Chanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -337,6 +352,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712121905317_Remove validation attributes.resx">
       <DependentUpon>201712121905317_Remove validation attributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712121953336_Add Subscribes to user.resx">
+      <DependentUpon>201712121953336_Add Subscribes to user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712122158134_Add Chanel entity.resx">
+      <DependentUpon>201712122158134_Add Chanel entity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

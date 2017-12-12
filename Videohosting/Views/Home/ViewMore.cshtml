@@ -14,6 +14,7 @@
                             <source src="@Url.Action("ShowVideo", "Video", new {id = Model[i].Id})" type="video/mp4">
                         </video>
                     </a>
+                    @Html.ActionLink(Model[i].Chanel.User.UserName, "Chanel", "Chanel", new {userName = Model[i].Chanel.User.UserName }, null)
                 </div>
                 if (i % 3 == 2)
                 {
