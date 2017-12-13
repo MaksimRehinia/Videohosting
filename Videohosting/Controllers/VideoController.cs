@@ -54,26 +54,27 @@ namespace Videohosting.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Upload(Video video, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid && file != null)
+            if (ModelState.IsValid && file != null && file.InputStream.Length <= 2 * 1024 * 1024 * 1024L - 1)
             {                              
-                var fileName = Path.GetFileName(file.FileName);
-
-                var stream = file.InputStream;
+                var fileName = Path.GetFileName(file.FileName);                
 
                 using (var db = new ApplicationDbContext())
                 {
                     var chanel = db.Chanels.FirstOrDefault(temp =>
                         temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name);
                     video.Chanel = chanel;
-                    video.ContentBytes = stream.ReadAsBytes();
+                    video.ContentBytes = file.InputStream.ReadAsBytes();
                     video.FilePath = fileName;
                     db.Entry(video).State = EntityState.Added;
 
                     db.SaveChanges();
                 }
+
+                return RedirectToAction("Index", "Chanel");
             }
 
-            return RedirectToAction("Index", "Chanel");
+            ViewBag.ErrorMessage = "Video size must be less then 2 Gb.";
+            return View();            
         }
     }
 }

@@ -2,16 +2,13 @@
 
 @{
     ViewBag.Title = "My channel";
-    Layout = "~/Views/Shared/_DisplayVideos.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@section BeforeDisplaying
-{   
-    <p>
-        @Html.ActionLink("Upload new video", "Upload", "Video")
-    </p>
+<p>
+    @Html.ActionLink("Upload new video", "Upload", "Video")
+</p>
 
-    <h2>My videos</h2>
-    
-    
-}
+<h2>My videos</h2>        
+
+@Html.Partial("_DisplayVideos")
