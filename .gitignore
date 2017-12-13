@@ -289,3 +289,7 @@ __pycache__/
 
 # Video files
 *.mp4
+
+#Databases
+*.mdf
+*.ldf
