@@ -23,7 +23,7 @@ namespace Videohosting.Controllers
 
         public ActionResult ViewMore()
         {            
-            return PartialView(new ApplicationDbContext().Videos.ToList());
+            return PartialView("_DisplayVideos", new ApplicationDbContext().Videos.ToList());
         }
     }
 }
