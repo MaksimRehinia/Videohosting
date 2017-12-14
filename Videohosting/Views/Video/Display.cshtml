@@ -11,9 +11,9 @@
     <video style="outline: none; width: 600px;" controls="controls">
         <source src="@Url.Action("ShowVideo", "Video", new {id = Model.Id})" type="video/mp4">
     </video>
-    @Html.ActionLink(Model.Chanel.User.UserName, "Chanel", "Chanel", new {userName = Model.Chanel.User.UserName }, null)
-    
-    
+    @Html.ActionLink(Model.Channel.User.UserName, "Channel", "Channel", new {userName = Model.Channel.User.UserName }, null)
+
+
 </div>
 <div class="row">
     <div class="col-lg-2">

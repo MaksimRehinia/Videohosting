@@ -1,16 +1,18 @@
-﻿@{
+﻿@model List<Videohosting.Models.Video>
+
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Html.Partial("_DisplayVideos")
+<div id="results">
+    @Html.Partial("_DisplayVideos", Model)
+</div>
 
-<div id="results"></div>
-
-<div id ="button">
-    @using (Ajax.BeginForm("ViewMore", new AjaxOptions { UpdateTargetId = "results", InsertionMode = InsertionMode.InsertAfter}))
+<div id="button" align="center">
+    @using (Ajax.BeginForm("ViewMore", new AjaxOptions { UpdateTargetId = "results", InsertionMode = InsertionMode.InsertAfter }))
     {
-        <input type="submit" value="More" />
+        <input type="submit" class="btn btn-block" value="More" />
     }
 </div>
 
