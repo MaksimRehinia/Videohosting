@@ -62,11 +62,12 @@ namespace Videohosting.Controllers
                 {
                     var channel = db.Channels.FirstOrDefault(temp =>
                         temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name);
+                    
                     video.Channel = channel;
                     video.ContentBytes = file.InputStream.ReadAsBytes();
                     video.FilePath = fileName;
                     db.Entry(video).State = EntityState.Added;
-
+                    channel.Videos.Add(video);
                     db.SaveChanges();
                 }
 
