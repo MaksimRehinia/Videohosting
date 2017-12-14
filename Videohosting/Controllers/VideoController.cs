@@ -60,9 +60,9 @@ namespace Videohosting.Controllers
 
                 using (var db = new ApplicationDbContext())
                 {
-                    var chanel = db.Chanels.FirstOrDefault(temp =>
+                    var channel = db.Channels.FirstOrDefault(temp =>
                         temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name);
-                    video.Chanel = chanel;
+                    video.Channel = channel;
                     video.ContentBytes = file.InputStream.ReadAsBytes();
                     video.FilePath = fileName;
                     db.Entry(video).State = EntityState.Added;
@@ -70,7 +70,7 @@ namespace Videohosting.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index", "Chanel");
+                return RedirectToAction("Index", "Channel");
             }
 
             ViewBag.ErrorMessage = "Video size must be less then 2 Gb.";

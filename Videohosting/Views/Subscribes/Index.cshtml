@@ -2,11 +2,11 @@
 @if (Model != null)
 {
     <ul>
-        @foreach (var subscribe in Model.Chanels)
+        @foreach (var subscribe in Model.Channels)
         {
             if (subscribe.User.UserName != Model.UserName)
             {
-                <li>@Html.ActionLink(subscribe.User.UserName, "Index", "Chanel", new { userName = subscribe.User.UserName }, null);</li>
+                <li>@Html.ActionLink(subscribe.User.UserName, "Index", "Channel", new { userName = subscribe.User.UserName }, null);</li>
             }
         }
     </ul>

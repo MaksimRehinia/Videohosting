@@ -166,7 +166,7 @@ namespace Videohosting.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 using (var db = new ApplicationDbContext())
                 {
-                    db.Chanels.Add(new Chanel()
+                    db.Channels.Add(new Channel()
                     {
                         User = user
                     });
@@ -390,7 +390,7 @@ namespace Videohosting.Controllers
                 var result = await UserManager.CreateAsync(user);
                 using (var db = new ApplicationDbContext())
                 {
-                    db.Chanels.Add(new Chanel()
+                    db.Channels.Add(new Channel()
                     {
                         User = user
                     });
