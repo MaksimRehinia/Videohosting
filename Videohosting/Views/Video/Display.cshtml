@@ -1,4 +1,5 @@
-﻿@model Videohosting.Models.Video
+﻿@using Microsoft.AspNet.Identity
+@model Videohosting.Models.Video
 
 @{
     ViewBag.Title = Model.Title;
@@ -11,14 +12,43 @@
         <source src="@Url.Action("ShowVideo", "Video", new {id = Model.Id})" type="video/mp4">
     </video>
     @Html.ActionLink(Model.Chanel.User.UserName, "Chanel", "Chanel", new {userName = Model.Chanel.User.UserName }, null)
-    <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="50"
-             aria-valuemin="100" aria-valuemax="100" style="width: 30px; height: 10px" >
-            
-        </div>
-    </div>
+    
+    
 </div>
+<div class="row">
+    <div class="col-lg-2">
+        <div id="bar" style="width: 100px; height: 10px">
+            <div>
+                @if (Model.DislikesCount == 0)
+                {
+                    Model.DislikesCount = 1;
+                }
+                <div class="progress-bar" style="width: @(Model.LikesCount / Model.DislikesCount * 100 % 101)%; height: 5px">
+                </div>
+            </div>
+         </div>
+    </div>
+    <div class="col-md-1">
+            @using (Ajax.BeginForm("Like", new AjaxOptions {UpdateTargetId = @"bar"}))
+            {
+                <input type="hidden" name="videoId" value="@Model.Id"/>
+                <div>
+                    <input type="submit" value="Like" name="likeValue" id="Like" class="btn btn-default"/>
+                </div>
 
+            }
+        </div>
+        <div class="col-md-1">
+            @using (Ajax.BeginForm("Dislike", new AjaxOptions {UpdateTargetId = @"bar"}))
+            {
+                <input type="hidden" name="videoId" value="@Model.Id"/>
+                <div>
+                    <input type="submit" value="Dislike" name="likeValue" id="Dislike" class="btn btn-default"/>
+                </div>
+
+            }
+        </div>    
+</div>
 <div class="row">
     <p>@Model.Description</p>
 </div>

@@ -76,5 +76,74 @@ namespace Videohosting.Controllers
             ViewBag.ErrorMessage = "Video size must be less then 2 Gb.";
             return View();            
         }
+
+        [Authorize]
+        public ActionResult Like(int videoId)
+        {
+            Video video = null;
+            using (var db = new ApplicationDbContext())
+            {
+                video = db.Videos.FirstOrDefault(temp => temp.Id == videoId);
+                var like = db.Likes.Where(temp => temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name).FirstOrDefault(temp => temp.Video.Id == videoId);
+                if (like == null)
+                {
+                    db.Likes.Add(new Like
+                    {
+                        User = db.Users.First(
+                            temp => temp.UserName == System.Web.HttpContext.Current.User.Identity.Name),
+                            LikeValue = true,
+                            Video = video
+                    });
+                    video.LikesCount++;
+                }
+                else
+                {
+                    if (!like.LikeValue)
+                    {
+                        like.LikeValue = true;
+                        video.LikesCount++;
+                        video.DislikesCount--;
+                    }
+                }
+                db.SaveChanges();
+            }
+            return PartialView(video);
+        }
+
+        [Authorize]
+        public ActionResult Dislike(int videoId)
+        {
+            Video video = null;
+            using (var db = new ApplicationDbContext())
+            {
+                video = db.Videos.FirstOrDefault(temp => temp.Id == videoId);
+                var like = db.Likes.Where(temp => temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name).FirstOrDefault(temp => temp.Video.Id == videoId);
+                if (like == null)
+                {
+                    
+                    db.Likes.Add(new Like
+                    {
+                        User = db.Users.First(
+                            temp => temp.UserName == System.Web.HttpContext.Current.User.Identity.Name),
+                            LikeValue = false,
+                            Video = video
+
+                    });
+                    video.LikesCount++;
+                }
+                else
+                {
+                    if (like.LikeValue)
+                    {
+                        like.LikeValue = false;
+                        video.DislikesCount++;
+                        video.LikesCount--;
+                    }
+                }
+                db.SaveChanges();
+            }
+            return PartialView("Like",video);
+
+        }
     }
 }

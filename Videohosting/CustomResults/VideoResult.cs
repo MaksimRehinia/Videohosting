@@ -28,7 +28,7 @@ namespace Videohosting.CustomResults
                     context.HttpContext.Response.ContentType = "video/mp4";
                     context.HttpContext.Response.AppendHeader("Content-Disposition", "filename=" + video.FilePath);
                     context.HttpContext.Response.BinaryWrite(video.ContentBytes);
-                    context.HttpContext.Response.End();
+                    //context.HttpContext.Response.End();
                 }
             }            
         }

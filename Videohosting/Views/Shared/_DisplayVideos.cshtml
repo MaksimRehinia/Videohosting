@@ -10,7 +10,7 @@
                 <div class="col-md-4">
                     <p>@Html.DisplayFor(modelItem => Model[i].Title)</p>
                     <a href="@Url.Action("Display", "Video", new {id = Model[i].Id})" type="video/mp4">
-                        <video style="outline: none; width: 100%;">
+                        <video width="320" height="200" >
                             <source src="@Url.Action("ShowVideo", "Video", new {id = Model[i].Id})" type="video/mp4">
                         </video>                        
                     </a>

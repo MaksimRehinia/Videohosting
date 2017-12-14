@@ -241,12 +241,17 @@
     <Compile Include="Migrations\201712122158134_Add Chanel entity.Designer.cs">
       <DependentUpon>201712122158134_Add Chanel entity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712131235441_Add like entity.cs" />
+    <Compile Include="Migrations\201712131235441_Add like entity.Designer.cs">
+      <DependentUpon>201712131235441_Add like entity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
     <Compile Include="Models\Chanel.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Like.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -319,6 +324,7 @@
     <Content Include="Views\Subscribes\Index.cshtml" />
     <Content Include="Views\Chanel\Index.cshtml" />
     <Content Include="Views\Chanel\Chanel.cshtml" />
+    <Content Include="Views\Video\Like.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -357,6 +363,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712122158134_Add Chanel entity.resx">
       <DependentUpon>201712122158134_Add Chanel entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712131235441_Add like entity.resx">
+      <DependentUpon>201712131235441_Add like entity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
