@@ -2,7 +2,7 @@
 @if (Model != null)
 {
     <ul>
-        @foreach (var subscribe in Model.Channels)
+        @foreach (var subscribe in Model.Subscribes)
         {
             if (subscribe.User.UserName != Model.UserName)
             {

@@ -1,8 +1,3 @@
-﻿@model Videohosting.Models.Video
-
-@if (Model.DislikesCount == 0)
-{
-    Model.DislikesCount = 1;
-}
-<div class="progress-bar" style="width: @(Model.LikesCount / Model.DislikesCount * 100 % 101)%; height: 5px">
-</div>
+﻿@model int
+<div class="progress-bar" role="progressbar"
+     aria-valuemin="0" aria-valuemax="100" style="width:@Model%"></div>

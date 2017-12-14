@@ -10,7 +10,6 @@ namespace Videohosting.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Videohosting.Models.ApplicationDbContext";
         }
 
         protected override void Seed(Videohosting.Models.ApplicationDbContext context)

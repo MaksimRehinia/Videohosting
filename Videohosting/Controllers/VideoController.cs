@@ -81,6 +81,7 @@ namespace Videohosting.Controllers
         public ActionResult Like(int videoId)
         {
             Video video = null;
+            double percentage = 0;
             using (var db = new ApplicationDbContext())
             {
                 video = db.Videos.FirstOrDefault(temp => temp.Id == videoId);
@@ -91,8 +92,8 @@ namespace Videohosting.Controllers
                     {
                         User = db.Users.First(
                             temp => temp.UserName == System.Web.HttpContext.Current.User.Identity.Name),
-                            LikeValue = true,
-                            Video = video
+                        LikeValue = true,
+                        Video = video
                     });
                     video.LikesCount++;
                 }
@@ -106,30 +107,34 @@ namespace Videohosting.Controllers
                     }
                 }
                 db.SaveChanges();
+                percentage = video.LikesCount;
+                percentage = percentage / (video.LikesCount + video.DislikesCount);
+                percentage = percentage * 100 % 101;
             }
-            return PartialView(video);
+            return PartialView((int)percentage);
         }
 
         [Authorize]
         public ActionResult Dislike(int videoId)
         {
             Video video = null;
+            double percentage = 0;
             using (var db = new ApplicationDbContext())
             {
                 video = db.Videos.FirstOrDefault(temp => temp.Id == videoId);
                 var like = db.Likes.Where(temp => temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name).FirstOrDefault(temp => temp.Video.Id == videoId);
                 if (like == null)
                 {
-                    
+
                     db.Likes.Add(new Like
                     {
                         User = db.Users.First(
                             temp => temp.UserName == System.Web.HttpContext.Current.User.Identity.Name),
-                            LikeValue = false,
-                            Video = video
+                        LikeValue = false,
+                        Video = video
 
                     });
-                    video.LikesCount++;
+                    video.DislikesCount++;
                 }
                 else
                 {
@@ -141,8 +146,12 @@ namespace Videohosting.Controllers
                     }
                 }
                 db.SaveChanges();
+                percentage = video.LikesCount;
+                percentage = percentage / (video.LikesCount + video.DislikesCount);
+                percentage = percentage * 100 % 101;
+
             }
-            return PartialView("Like",video);
+            return PartialView("Like", (int)percentage);
 
         }
     }

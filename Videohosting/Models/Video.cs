@@ -23,5 +23,6 @@ namespace Videohosting.Models
         public virtual Channel Channel { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
     }
 }
