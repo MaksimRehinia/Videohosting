@@ -1,0 +1,14 @@
+﻿@model List<Videohosting.Models.Video>
+
+@{
+    ViewBag.Title = "My channel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Upload new video", "Upload", "Video")
+</p>
+
+<h2>My videos</h2>        
+
+@Html.Partial("_DisplayVideos")

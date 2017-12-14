@@ -10,5 +10,6 @@ namespace Videohosting.Models
         public int Id { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<Video> Videos { get; set; }
+        public int VideosCount { get; set; }
     }
 }

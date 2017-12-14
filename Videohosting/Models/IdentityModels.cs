@@ -10,9 +10,7 @@ namespace Videohosting.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public int VideosCount { get; set; }
-        public virtual ICollection<Video> Videos { get; set; }
-        public virtual ICollection<Channel> Channels { get; set; }
+        public virtual ICollection<Channel> Subscribes { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
