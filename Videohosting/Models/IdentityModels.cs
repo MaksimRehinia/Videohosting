@@ -30,6 +30,7 @@ namespace Videohosting.Models
         {
         }
 
+        public DbSet<Like> Likes { get; set; }
         public DbSet<Video> Videos { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Chanel> Chanels { get; set; }

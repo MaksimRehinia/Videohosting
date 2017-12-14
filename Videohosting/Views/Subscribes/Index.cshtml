@@ -6,7 +6,7 @@
         {
             if (subscribe.User.UserName != Model.UserName)
             {
-                <li>@Html.ActionLink(subscribe.User.UserName, "Index", "Chanel", new { subscribe = subscribe.User.UserName });</li>
+                <li>@Html.ActionLink(subscribe.User.UserName, "Index", "Chanel", new { userName = subscribe.User.UserName }, null);</li>
             }
         }
     </ul>
