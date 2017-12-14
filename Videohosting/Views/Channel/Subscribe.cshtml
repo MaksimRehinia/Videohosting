@@ -1,0 +1,20 @@
+﻿@model Videohosting.Models.Channel
+
+@if (ViewBag.Button)
+{
+    using (Ajax.BeginForm("Subscribe", new AjaxOptions { UpdateTargetId = "sub-button" }))
+    {   
+         <input type="hidden" name="channelId" value="@Model.Id"/>
+         <input type="hidden" name="userName" value="@Model.User.UserName"/>
+         <input type="submit" value="Subscribe" />
+    }
+}
+else
+{
+    using (Ajax.BeginForm("Unsubscribe", new AjaxOptions { UpdateTargetId = "sub-button" }))
+    {   
+        <input type="hidden" name="channelId" value="@Model.Id"/>
+        <input type="hidden" name="userName" value="@Model.User.UserName"/>
+        <input type="submit" value="Unsubscribe" />
+    }
+}
