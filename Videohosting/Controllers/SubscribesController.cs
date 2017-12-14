@@ -12,7 +12,7 @@ namespace Videohosting.Controllers
         // GET: Subscribes
         public ActionResult Index()
         {   
-            return View(new ApplicationDbContext().Users.FirstOrDefault(user => user.UserName == System.Web.HttpContext.Current.User.Identity.Name));
+            return View(new ApplicationDbContext().Subscriptions.FirstOrDefault(sub => sub.Subscriber.User.UserName == System.Web.HttpContext.Current.User.Identity.Name).Channels.ToList());
         }
     }
 }

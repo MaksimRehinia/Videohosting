@@ -1,7 +1,12 @@
 ﻿@model Videohosting.Models.Channel
 @{
     ViewBag.Title = "Channel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div>
+    <p>Chanel</p>
+</div>
+
 <div id="sub-button">
     @using (Ajax.BeginForm("Subscribe", new AjaxOptions { UpdateTargetId = "sub-button" }))
     {   
