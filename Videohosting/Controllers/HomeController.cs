@@ -12,6 +12,7 @@ namespace Videohosting.Controllers
 
         public ActionResult Index()
         {
+            
             currentPage = 0;
             return ViewMore();
         }
