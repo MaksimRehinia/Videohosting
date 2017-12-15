@@ -217,6 +217,10 @@
     <Compile Include="Migrations\201712141620102_Change Video entity.Designer.cs">
       <DependentUpon>201712141620102_Change Video entity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712141930143_Add Subscription entity.cs" />
+    <Compile Include="Migrations\201712141930143_Add Subscription entity.Designer.cs">
+      <DependentUpon>201712141930143_Add Subscription entity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbInitializer.cs" />
@@ -225,6 +229,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -297,6 +302,7 @@
     <Content Include="Views\Channel\Index.cshtml" />
     <Content Include="Views\Channel\Channel.cshtml" />
     <Content Include="Views\Video\Like.cshtml" />
+    <Content Include="Views\Channel\Subscribe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -317,6 +323,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201712141620102_Change Video entity.resx">
       <DependentUpon>201712141620102_Change Video entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712141930143_Add Subscription entity.resx">
+      <DependentUpon>201712141930143_Add Subscription entity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

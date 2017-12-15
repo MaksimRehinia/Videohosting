@@ -12,7 +12,6 @@ namespace Videohosting.Controllers
 
         public ActionResult Index()
         {
-            
             currentPage = 0;
             return ViewMore();
         }
@@ -41,16 +40,14 @@ namespace Videohosting.Controllers
         {
             var itemsToSkip = currentPage * PageSize;
             currentPage++;
-            using (var db = new ApplicationDbContext())
+            var db = new ApplicationDbContext();
+            var videos = db.Videos.OrderBy(t => t.Id).Skip(itemsToSkip).Take(PageSize).ToList();
+            if (videos?.Count == 0)
             {
-                var videos = db.Videos.OrderBy(t => t.Id).Skip(itemsToSkip).Take(PageSize).ToList();
-                if (videos?.Count == 0)
-                {
-                    currentPage--;
-                }
-
-                return videos;
+                currentPage--;
             }
+            return videos;
+
         }
     }
 }

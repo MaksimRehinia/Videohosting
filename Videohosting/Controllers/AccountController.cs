@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -164,18 +165,20 @@ namespace Videohosting.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                using (var db = new ApplicationDbContext())
-                {
-                    db.Channels.Add(new Channel()
-                    {
-                        User = user
-                    });
-                }
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "User");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    using (var db = new ApplicationDbContext())
+                    {
+                        db.Channels.Add(new Channel()
+                        {
+                            User = user,
+                            Videos = new List<Video>(),
+                            VideosCount = 0
+                        });
+                        //db.SaveChanges();
+                    }
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -388,13 +391,6 @@ namespace Videohosting.Controllers
                 }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
-                using (var db = new ApplicationDbContext())
-                {
-                    db.Channels.Add(new Channel()
-                    {
-                        User = user
-                    });
-                }
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, "User");
