@@ -9,7 +9,10 @@ using Videohosting.Models;
 namespace Videohosting.Controllers
 {
     public class ChannelController : Controller
-    {   
+    {
+        private const int PageSize = 3;
+        private static int _currentPage;
+
         [Authorize]
         public ActionResult Index()
         {
@@ -17,10 +20,9 @@ namespace Videohosting.Controllers
             {
                 if (db.Channels.FirstOrDefault(
                         channel => channel.User.UserName == db.Users.FirstOrDefault(usr =>
-                                       usr.UserName == System.Web.HttpContext.Current.User.Identity.Name).UserName) ==
-                    null)
+                                       usr.UserName == System.Web.HttpContext.Current.User.Identity.Name).UserName) == null)
                 {
-                    db.Channels.Add(new Channel()
+                    db.Channels.Add(new Channel
                     {
                         User = db.Users.First(usr => usr.UserName == System.Web.HttpContext.Current.User.Identity.Name),
                         Videos = new List<Video>(),
@@ -30,8 +32,8 @@ namespace Videohosting.Controllers
                 }
                 
             }
-            return View(new ApplicationDbContext().Videos.Where(video=>
-                video.Channel.User.UserName == System.Web.HttpContext.Current.User.Identity.Name).ToList());
+            _currentPage = 0;
+            return ViewMore(System.Web.HttpContext.Current.User.Identity.Name);            
         }
 
         public ActionResult Channel(string userName)
@@ -43,8 +45,6 @@ namespace Videohosting.Controllers
             var db = new ApplicationDbContext();
             return View(db.Channels.First(channel =>
                 channel.User.UserName == userName));
-
-
         }
 
         [Authorize]
@@ -100,6 +100,37 @@ namespace Videohosting.Controllers
 
             db.SaveChanges();
             return PartialView("Subscribe", db.Channels.First(channel => channel.Id == channelId));
+        }
+
+        [Authorize]
+        public ActionResult ViewMore(string userName)
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_DisplayVideos", GetItemsPage(userName));
+            }
+
+            return View("Index", GetItemsPage(userName));
+        }
+
+        private static List<Video> GetItemsPage(string userName)
+        {
+            var itemsToSkip = _currentPage * PageSize;
+            _currentPage++;
+            var db = new ApplicationDbContext();
+            var videos = db.Videos
+                .Where(video => video.Channel.User.UserName == userName)
+                .OrderBy(t => t.Id)
+                .Skip(itemsToSkip)
+                .Take(PageSize)
+                .ToList();
+
+            if (videos?.Count == 0)
+            {
+                _currentPage--;
+            }
+
+            return videos;
         }
     }
 }

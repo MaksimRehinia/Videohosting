@@ -7,14 +7,14 @@
         <div class="row">
             @for (int i = j; i < Model.Count; i++)
             {                
-                <div class="col-md-4">
-                    <p>@Html.DisplayFor(modelItem => Model[i].Title)</p>
+                <div class="col-md-4" id="block">
+                    <h3>@Model[i].Title</h3>
                     <a href="@Url.Action("Display", "Video", new {id = Model[i].Id})" type="video/mp4">
-                        <video width="320" height="200" >
+                        <video width="350" height="197" >
                             <source src="@Url.Action("ShowVideo", "Video", new {id = Model[i].Id})" type="video/mp4">
                         </video>                        
                     </a>
-                    @Html.ActionLink(Model[i].Channel.User.UserName, "Channel", "Channel", new { userName = Model[i].Channel.User.UserName }, null)
+                    Uploaded by: @Html.ActionLink(Model[i].Channel.User.UserName, "Channel", "Channel", new { userName = Model[i].Channel.User.UserName }, null)
                 </div>                                                
                 if (i % 3 == 2)
                 {
