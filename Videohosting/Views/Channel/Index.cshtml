@@ -1,4 +1,4 @@
-﻿@model List<Videohosting.Models.Video>
+﻿@model Videohosting.Models.Channel
 
 @{
     ViewBag.Title = "My channel";
@@ -11,15 +11,17 @@
 
 <h2>My videos</h2>        
 
+@Html.Partial("SortVideos", Model);
 
 <div id="results">
-    @Html.Partial("_DisplayVideos", Model)
+    @Html.Partial("_DisplayVideos", Model.Videos.ToList())
 </div>
 
 <div id="button" align="center">
     @using (Ajax.BeginForm("ViewMore", new AjaxOptions { UpdateTargetId = "results", InsertionMode = InsertionMode.InsertAfter }))
     {
         <input type="submit" class="btn btn-block" value="More" />
+        <input type="hidden" name="userName" value="@Model.User.UserName"/>
     }
 </div>
 

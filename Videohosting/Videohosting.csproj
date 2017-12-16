@@ -303,6 +303,7 @@
     <Content Include="Views\Channel\Channel.cshtml" />
     <Content Include="Views\Video\Like.cshtml" />
     <Content Include="Views\Channel\Subscribe.cshtml" />
+    <Content Include="Views\Shared\SortVideos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

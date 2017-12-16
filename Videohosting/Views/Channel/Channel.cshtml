@@ -4,8 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div>
-    <p>Chanel</p>
+    <p>@(Model.User.UserName)'s channel</p>
 </div>
+
+@Html.Partial("SortVideos", Model);
 
 <div id="sub-button">
     @using (Ajax.BeginForm("Subscribe", new AjaxOptions { UpdateTargetId = "sub-button" }))

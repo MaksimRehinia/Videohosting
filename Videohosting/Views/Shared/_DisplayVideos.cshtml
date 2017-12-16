@@ -15,6 +15,7 @@
                         </video>                        
                     </a>
                     Uploaded by: @Html.ActionLink(Model[i].Channel.User.UserName, "Channel", "Channel", new { userName = Model[i].Channel.User.UserName }, null)
+                    Views : @Model[i].ViewsCount
                 </div>                                                
                 if (i % 3 == 2)
                 {
