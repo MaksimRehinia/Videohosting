@@ -12,6 +12,7 @@ namespace Videohosting.Controllers
     {
         private const int PageSize = 3;
         private static int _currentPage;
+        private IComparer<Video> currentComparer = new ViewCountComparer();
 
         [Authorize]
         public ActionResult Index()
@@ -33,7 +34,9 @@ namespace Videohosting.Controllers
                 
             }
             _currentPage = 0;
-            return ViewMore(System.Web.HttpContext.Current.User.Identity.Name);            
+            return View(new ApplicationDbContext().Channels.First(channel =>
+                channel.User.UserName == System.Web.HttpContext.Current.User.Identity.Name));
+            //return ViewMore(System.Web.HttpContext.Current.User.Identity.Name);            
         }
 
         public ActionResult Channel(string userName)
@@ -107,20 +110,20 @@ namespace Videohosting.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_DisplayVideos", GetItemsPage(userName));
+                return PartialView("_DisplayVideos", GetItemsPage(userName, currentComparer));
             }
 
-            return View("Index", GetItemsPage(userName));
+            return View("Index", GetItemsPage(userName, currentComparer));
         }
 
-        private static List<Video> GetItemsPage(string userName)
+        private static List<Video> GetItemsPage(string userName, IComparer<Video> comparer)
         {
             var itemsToSkip = _currentPage * PageSize;
             _currentPage++;
             var db = new ApplicationDbContext();
-            var videos = db.Videos
+            var videos = db.Videos.ToList()
                 .Where(video => video.Channel.User.UserName == userName)
-                .OrderBy(t => t.Id)
+                .OrderBy(t => t, comparer)
                 .Skip(itemsToSkip)
                 .Take(PageSize)
                 .ToList();
@@ -131,6 +134,46 @@ namespace Videohosting.Controllers
             }
 
             return videos;
+        }
+
+        public ActionResult SortByViews(string userName)
+        {
+            _currentPage = 0;
+            currentComparer = new ViewCountComparer();
+            return PartialView("_DisplayVideos", GetItemsPage(userName, currentComparer));
+        }
+
+        public ActionResult SortByLikes(string userName)
+        {
+            _currentPage = 0;
+            currentComparer = new LikeComparer();
+            return PartialView("_DisplayVideos", GetItemsPage(userName, currentComparer));
+        }
+
+        private class ViewCountComparer : IComparer<Video>
+        {
+            public int Compare(Video x, Video y)
+            {
+                if (x == null || y == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
+                return x.ViewsCount > y.ViewsCount ? 1 : x.ViewsCount == y.ViewsCount ? 0 : -1;
+            }
+        }
+
+        private class LikeComparer : IComparer<Video>
+        {
+            public int Compare(Video x, Video y)
+            {
+                if (x == null || y == null)
+                {
+                    throw new ArgumentNullException();
+                }
+
+                return x.LikesCount > y.LikesCount ? 1 : x.LikesCount == y.LikesCount ? 0 : -1;
+            }
         }
     }
 }
