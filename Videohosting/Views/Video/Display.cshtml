@@ -69,9 +69,14 @@
 
     @foreach (var comment in Model.Comments)
     {
-        <div class="">
-            <p>@comment.User.UserName</p>
-            <p>@comment.Message</p>
+        <div class="media" id="comment">
+            <div class="pull-left">
+                <img src="~/Content/img_avatar.png" class="media-object" style="width:60px">
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">@comment.User.UserName</h4>
+                <p>@comment.Message</p>
+            </div>
         </div>
     }
 </div>
