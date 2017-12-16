@@ -7,15 +7,15 @@
         <div class="row">
             @for (int i = j; i < Model.Count; i++)
             {                
-                <div class="col-md-4" id="block">
+                <div class="col-md-4 block">
                     <h3>@Model[i].Title</h3>
                     <a href="@Url.Action("Display", "Video", new {id = Model[i].Id})" type="video/mp4">
                         <video width="350" height="197" >
                             <source src="@Url.Action("ShowVideo", "Video", new {id = Model[i].Id})" type="video/mp4">
                         </video>                        
                     </a>
+                    Views count: @Model[i].ViewsCount <br />
                     Uploaded by: @Html.ActionLink(Model[i].Channel.User.UserName, "Channel", "Channel", new { userName = Model[i].Channel.User.UserName }, null)
-                    Views : @Model[i].ViewsCount
                 </div>                                                
                 if (i % 3 == 2)
                 {

@@ -5,13 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    @Html.ActionLink("Upload new video", "Upload", "Video")
-</p>
+<button style="margin-top: 10px" class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Upload", "Video")';return false;">
+    Upload new video
+</button>
 
-<h2>My videos</h2>        
+<h2 align="center">My videos</h2>   
 
-@Html.Partial("SortVideos", Model);
+@Html.Partial("_SortVideos", Model)
 
 <div id="results">
     @Html.Partial("_DisplayVideos", Model.Videos.ToList())

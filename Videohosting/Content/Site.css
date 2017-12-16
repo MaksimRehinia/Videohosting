@@ -23,27 +23,7 @@ textarea {
     max-width: 280px;
 }
 
-.btn-file {
-    position: relative;
-    overflow: hidden;
-}
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
-
-#block {
+.block {
     width: 31.5%;
     background-color: #f1f1f1;
     padding: 0.01em 16px;
@@ -51,7 +31,7 @@ textarea {
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) !important;
 }
 
-#comment {
+.comment {
     width: 31.5%;
     background-color: #f1f1f1;
     padding: 0.01em 16px 0.01em 0px;
@@ -61,4 +41,8 @@ textarea {
 
 #results {
     margin-left: -45px;
+}
+
+#sort_dropdown {
+    margin-top: 10px;    
 }

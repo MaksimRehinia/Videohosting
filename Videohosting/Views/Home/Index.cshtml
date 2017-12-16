@@ -5,16 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="btn-group col-sm-push-11">
+<div class="btn-group col-sm-push-11" id="sort_dropdown">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
         Sort by <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li>@Ajax.ActionLink("Views", "SortByViews", new AjaxOptions() { UpdateTargetId = "results" })</ li >
+        <li>@Ajax.ActionLink("Views", "SortByViews", new AjaxOptions { UpdateTargetId = "results" })</li >
         <li class="divider"></li>
-        <li>@Ajax.ActionLink("Likes", "SortByLikes", new AjaxOptions() { UpdateTargetId = "results" })</ li >
-</ul>
+        <li>@Ajax.ActionLink("Likes", "SortByLikes", new AjaxOptions { UpdateTargetId = "results" })</li >
+    </ul>
 </div>
+
 <div id="results">
     @Html.Partial("_DisplayVideos", Model)
 </div>
@@ -25,7 +26,6 @@
         <input type="submit" class="btn btn-block" value="More" />
     }
 </div>
-
 
 @Scripts.Render("~/scripts/jquery-1.10.2.min.js")
 @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")

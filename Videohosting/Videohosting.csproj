@@ -205,6 +205,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChannelController.cs" />
+    <Compile Include="Controllers\Comparers\LikeComparer.cs" />
+    <Compile Include="Controllers\Comparers\ViewCountComparer.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SubscribesController.cs" />
@@ -303,7 +305,7 @@
     <Content Include="Views\Channel\Channel.cshtml" />
     <Content Include="Views\Video\Like.cshtml" />
     <Content Include="Views\Channel\Subscribe.cshtml" />
-    <Content Include="Views\Shared\SortVideos.cshtml" />
+    <Content Include="Views\Shared\_SortVideos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

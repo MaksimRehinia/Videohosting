@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+
 <h3>Add video</h3>
 
 <div class="row">
@@ -29,13 +30,13 @@
                 </div>
             </div>
             <p>
-                <div>
-                    <input type="file" value="Browse" name="file" id="file" class="btn btn-file" required />@ViewBag.ErrorMessage
-                </div>
+                <label class="btn btn-primary">
+                    Browse&hellip; <input type="file" name="file" style="display: none;" required />
+                </label> @ViewBag.ErrorMessage                
             </p>
             <p>
                 <div>
-                    <input type="submit" value="Upload" name="upload" id="upload" class="btn btn-default" />
+                    <input type="submit" value="Upload" name="upload" id="upload" class="btn btn-success" />
                 </div>
             </p>
             <p>

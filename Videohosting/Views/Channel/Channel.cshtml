@@ -1,23 +1,33 @@
 ﻿@model Videohosting.Models.Channel
+
 @{
-    ViewBag.Title = "Channel";
+    ViewBag.Title = Model.User.UserName + "'s channel";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div>
-    <p>@(Model.User.UserName)'s channel</p>
+
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+
+<script>
+    $(document).ready(function () {        
+        $("#sub-button").load("@Url.Action("CheckSubscription", "Channel", new { userName = HttpContext.Current.User.Identity.Name, channelId = Model.Id })");
+    });
+</script>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 align="center" style="margin-top: -10px">@(Model.User.UserName)'s channel</h2>
+        <br />
+        <div id="sub-button" align="center" style="margin-top: -15px">
+            @using (Ajax.BeginForm("CheckSubscription", new AjaxOptions { UpdateTargetId = "sub-button", InsertionMode = InsertionMode.Replace }))
+            {
+                <input type="hidden" name="channelId" value="@Model.Id" />
+                <input type="hidden" name="userName" value="@User.Identity.Name" />                
+            }
+        </div>
+    </div>
 </div>
 
-@Html.Partial("SortVideos", Model);
-
-<div id="sub-button">
-    @using (Ajax.BeginForm("Subscribe", new AjaxOptions { UpdateTargetId = "sub-button" }))
-    {   
-        <input type="hidden" name="channelId" value="@Model.Id"/>
-        <input type="hidden" name="userName" value="@Model.User.UserName"/>
-        <input type="submit" value="Subscribe" />
-    }
-</div>
-
+@Html.Partial("_SortVideos", Model)
 
 <div id="results">
     @Html.Partial("_DisplayVideos", Model.Videos.ToList())

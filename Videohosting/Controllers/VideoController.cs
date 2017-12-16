@@ -27,6 +27,7 @@ namespace Videohosting.Controllers
                 video.ViewsCount++;
                 db.SaveChanges();
             }
+
             return PartialView(video);
         }
 
@@ -42,6 +43,7 @@ namespace Videohosting.Controllers
                     Video = db.Videos.First(video => video.Title == name),
                     User = db.Users.First(usr => usr.UserName == System.Web.HttpContext.Current.User.Identity.Name)
                 };
+
                 db.Comments.Add(comment);
                 db.SaveChanges();
             }
@@ -61,31 +63,32 @@ namespace Videohosting.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Upload(Video video, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid && file != null && file.InputStream.Length <= 2 * 1024 * 1024 * 1024L - 1)
-            {                              
-                var fileName = Path.GetFileName(file.FileName);                
-
-                using (var db = new ApplicationDbContext())
-                {
-                    var channel = db.Channels.FirstOrDefault(temp =>
-                        temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name);
-                    
-                    video.Channel = channel;
-                    video.ContentBytes = file.InputStream.ReadAsBytes();
-                    video.FilePath = fileName;
-                    db.Entry(video).State = EntityState.Added;
-                    channel.Videos.Add(video);
-                    db.SaveChanges();
-                }
-
-                return RedirectToAction("Index", "Channel");
+            var errorMessage = ValidateFile(file);
+            if (!ModelState.IsValid || errorMessage != string.Empty)
+            {
+                ViewBag.ErrorMessage = errorMessage;
+                return View();
             }
 
-            ViewBag.ErrorMessage = "Video size must be less then 2 Gb.";
-            return View();            
+            var fileName = Path.GetFileName(file.FileName);
+
+            using (var db = new ApplicationDbContext())
+            {
+                var channel = db.Channels.FirstOrDefault(temp =>
+                    temp.User.UserName == System.Web.HttpContext.Current.User.Identity.Name);
+
+                video.Channel = channel;
+                video.ContentBytes = file.InputStream.ReadAsBytes();
+                video.FilePath = fileName;
+                db.Entry(video).State = EntityState.Added;
+                channel.Videos.Add(video);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Channel");
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult Like(int videoId)
         {
             Video video = null;
@@ -122,7 +125,7 @@ namespace Videohosting.Controllers
             return PartialView((int)percentage);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult Dislike(int videoId)
         {
             Video video = null;
@@ -161,6 +164,26 @@ namespace Videohosting.Controllers
             }
             return PartialView("Like", (int)percentage);
 
+        }
+
+        private static string ValidateFile(HttpPostedFileBase file)
+        {
+            if (file == null)
+            {
+                return "- Please select a video file.";
+            }
+
+            if (file.ContentType != "video/mp4")
+            {
+                return "- Uploaded file must be a video in mp4 format.";
+            }
+
+            if (file.InputStream.Length > 2 * 1024 * 1024 * 1024L - 1)
+            {
+                return "- Video size must be less then 2 Gb.";
+            }
+
+            return string.Empty;
         }
     }
 }

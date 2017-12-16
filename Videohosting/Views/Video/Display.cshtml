@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-@model Videohosting.Models.Video
+﻿@model Videohosting.Models.Video
 
 @{
     ViewBag.Title = Model.Title;
@@ -12,7 +11,6 @@
         <source src="@Url.Action("ShowVideo", "Video", new {id = Model.Id})" type="video/mp4">
     </video>
     @Html.ActionLink(Model.Channel.User.UserName, "Channel", "Channel", new { userName = Model.Channel.User.UserName }, null)
-
 
 </div>
 <div class="row">
@@ -73,7 +71,7 @@
 
     @foreach (var comment in Model.Comments)
     {
-        <div class="media" id="comment">
+        <div class="media comment">
             <div class="pull-left">
                 <img src="~/Content/img_avatar.png" class="media-object" style="width:60px">
             </div>

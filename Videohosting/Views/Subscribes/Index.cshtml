@@ -1,10 +1,18 @@
 ﻿@model List<Videohosting.Models.Channel>
+
+@{
+    ViewBag.Title = "My subscribes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My subscribes</h2>
+
 @if (Model != null)
 {
-    <ul>
+    <div class="list-group">
         @foreach (var subscribe in Model)
         {
-            <li>@subscribe.User.UserName</li>
-        }
-    </ul>
+            @Html.ActionLink(subscribe.User.UserName, "Channel", "Channel", new { userName = subscribe.User.UserName }, new { @class = "list-group-item" })
+        }        
+    </div>
 }
