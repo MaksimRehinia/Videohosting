@@ -76,7 +76,7 @@ namespace Videohosting.Controllers
                     throw new ArgumentNullException();
                 }
 
-                return x.ViewsCount > y.ViewsCount ? 1 : x.ViewsCount == y.ViewsCount ? 0 : -1;
+                return x.ViewsCount > y.ViewsCount ? -1 : x.ViewsCount == y.ViewsCount ? 0 : 1;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Videohosting.Controllers
                     throw new ArgumentNullException();
                 }
 
-                return x.LikesCount > y.LikesCount? 1 : x.LikesCount == y.LikesCount ? 0 : -1;
+                return x.LikesCount > y.LikesCount? -1 : x.LikesCount == y.LikesCount ? 0 : 1;
             }
         }
     }

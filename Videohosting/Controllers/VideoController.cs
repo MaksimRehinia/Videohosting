@@ -19,8 +19,15 @@ namespace Videohosting.Controllers
         }
         
         public ActionResult Display(int id)
-        {
-            return PartialView(new ApplicationDbContext().Videos.FirstOrDefault(video => video.Id == id));
+        {   
+            var db = new ApplicationDbContext();
+            var video = db.Videos.FirstOrDefault(vid => vid.Id == id);
+            if (video != null)
+            {
+                video.ViewsCount++;
+                db.SaveChanges();
+            }
+            return PartialView(video);
         }
 
         [Authorize(Roles = "User")]
