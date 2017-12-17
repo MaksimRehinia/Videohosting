@@ -33,7 +33,7 @@ namespace Videohosting.Controllers
 
         [Authorize(Roles = "User")]
         public ActionResult AddComment(string message, string name)
-        {
+        {                        
             Comment comment;
             using (var db = new ApplicationDbContext())
             {
@@ -90,7 +90,7 @@ namespace Videohosting.Controllers
 
         [Authorize(Roles = "User")]
         public ActionResult Like(int videoId)
-        {
+        {                        
             Video video = null;
             double percentage = 0;
             using (var db = new ApplicationDbContext())
@@ -127,7 +127,7 @@ namespace Videohosting.Controllers
 
         [Authorize(Roles = "User")]
         public ActionResult Dislike(int videoId)
-        {
+        {                        
             Video video = null;
             double percentage = 0;
             using (var db = new ApplicationDbContext())
@@ -165,7 +165,7 @@ namespace Videohosting.Controllers
             return PartialView("Like", (int)percentage);
 
         }
-
+       
         private static string ValidateFile(HttpPostedFileBase file)
         {
             if (file == null)

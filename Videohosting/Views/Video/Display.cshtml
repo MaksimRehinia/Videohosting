@@ -9,59 +9,64 @@
 <div class="row">
     <video style="outline: none; width: 600px;" controls="controls">
         <source src="@Url.Action("ShowVideo", "Video", new {id = Model.Id})" type="video/mp4">
-    </video>
-    @Html.ActionLink(Model.Channel.User.UserName, "Channel", "Channel", new { userName = Model.Channel.User.UserName }, null)
-
+    </video>   
+    <br />
+    Uploaded by: @Html.ActionLink(Model.Channel.User.UserName, "Channel", "Channel", new { userName = Model.Channel.User.UserName }, null)            
+    <br />
+    ViewsCount: @Model.ViewsCount
+    <br />
 </div>
-<div class="row">
-    <div class="col-lg-2">
-        <div id="bar" style="width: 100px; height: 10px">
-            @{
-                double percentage = Model.LikesCount;
-                percentage = percentage / (Model.LikesCount + Model.DislikesCount);
-                percentage = percentage * 100 % 101;
-            }
-            <div class="progress-bar" role="progressbar"
-                 aria-valuemin="0" aria-valuemax="100" style="width:@percentage%"></div>
-        </div>
+<br />
+<div class="row">    
+    <div id="bar" class="progress" style="width: 250px; height: 10px">
+        @{
+            double percentage = Model.LikesCount;
+            percentage = percentage / (Model.LikesCount + Model.DislikesCount);
+            percentage = percentage * 100 % 101;
+        }
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:@percentage%"></div>
     </div>
+</div> 
+ 
+<div class="row">
     <div class="col-md-1">
         @using (Ajax.BeginForm("Like", new AjaxOptions { UpdateTargetId = @"bar" }))
         {
             <input type="hidden" name="videoId" value="@Model.Id" />
-                <div>
-                    <input type="submit" value="Like" name="likeValue" id="Like" class="btn btn-default" />
-                </div>
-
+            <div>
+                <input type="submit" value="Like" name="likeValue" id="Like" class="btn btn-default" />
+            </div>
         }
     </div>
     <div class="col-md-1">
         @using (Ajax.BeginForm("Dislike", new AjaxOptions { UpdateTargetId = @"bar" }))
         {
             <input type="hidden" name="videoId" value="@Model.Id" />
-                <div>
-                    <input type="submit" value="Dislike" name="likeValue" id="Dislike" class="btn btn-default" />
-                </div>
-
+            <div>
+                <input type="submit" value="Dislike" name="likeValue" id="Dislike" class="btn btn-default" />
+            </div>
         }
     </div>
 </div>
+<br />
 <div class="row">
-    <p>@Model.Description</p>
-</div>
-
-<div class="row">
-    <p>@Model.ViewsCount</p>
+    Description:
+    <div class="block">    
+        <p>@Model.Description</p>
+    </div>
 </div>
 
 <div class="comments">
-
-    <div id="button">
+    <label for="comment">Comment:</label>
+    <div id="comment">
         @using (Ajax.BeginForm("AddComment", new AjaxOptions { UpdateTargetId = @"ajax-comment", InsertionMode = InsertionMode.InsertBefore }))
         {
             <input type="hidden" name="name" value="@Model.Title" />
-            <input type="text" name="message" />
-            <input type="submit" value="Submit" />
+            <div class="form-group">                
+                <textarea class="form-control" rows="5" name="Message"></textarea>
+            </div> 
+            <input type="submit" class="btn btn-default" value="Submit" />
+            <br />
         }
     </div>
 

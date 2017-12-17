@@ -17,6 +17,7 @@ namespace Videohosting.Controllers
         [Authorize(Roles = "User")]
         public ActionResult Index()
         {
+            _currentPage = 0;
             using (var db = new ApplicationDbContext())
             {
                 if (db.Channels.FirstOrDefault(
@@ -33,49 +34,49 @@ namespace Videohosting.Controllers
                     db.SaveChanges();
                 }                
             }
-
-            _currentPage = 1;
-            return View(new ApplicationDbContext().Channels.First(channel =>
-                channel.User.UserName == System.Web.HttpContext.Current.User.Identity.Name));            
+            
+            return ViewMore(System.Web.HttpContext.Current.User.Identity.Name);
         }
 
         public ActionResult Channel(string userName)
         {
+            _currentPage = 0;
             if (userName == User.Identity.Name)
             {
                 return RedirectToAction("Index");
             }
 
-            var db = new ApplicationDbContext();
-            return View(db.Channels.First(channel =>
-                channel.User.UserName == userName));
+            CheckSubscription(userName);
+            return View(GetItemsPage(userName, _currentComparer));
         }
-
-        [Authorize(Roles = "User")]
-        public ActionResult CheckSubscription(string userName, int channelId)
+        
+        private void CheckSubscription(string userName)
         {            
             var db = new ApplicationDbContext();
-            var subs = db.Subscriptions.FirstOrDefault(subscription => subscription.Subscriber.User.UserName == userName);
+            var subs = db.Subscriptions.FirstOrDefault(subscription => subscription.Subscriber.User.UserName ==
+                                                                       System.Web.HttpContext.Current.User.Identity.Name);
             if (subs == null)
             {
                 ViewBag.IsSubscribed = false;
-                return PartialView("Subscribe", db.Channels.First(channel => channel.Id == channelId));                
+                return;
             }
 
-            var sub = subs.Channels.FirstOrDefault(channel => channel.Id == channelId);
+            var sub = subs.Channels.FirstOrDefault(channel => channel.User.UserName == userName);
             if (sub == null)
             {
                 ViewBag.IsSubscribed = false;
-                return PartialView("Subscribe", db.Channels.First(channel => channel.Id == channelId));                                
+                return;
             }
 
-            ViewBag.IsSubscribed = true;
-            return PartialView("Subscribe", db.Channels.First(channel => channel.Id == channelId));
-        }
+            ViewBag.IsSubscribed = true;            
+        }        
 
-        [Authorize(Roles = "User")]
         public ActionResult Subscribe(string userName, int channelId)
         {
+            var isAuthorized = CheckIfAuthorized();
+            if (isAuthorized != null)
+                return isAuthorized;
+
             ViewBag.IsSubscribed = true;
             var db = new ApplicationDbContext();
             var subs = db.Subscriptions.FirstOrDefault(subscription => subscription.Subscriber.User.UserName == userName);
@@ -88,8 +89,8 @@ namespace Videohosting.Controllers
                     Channels = new List<Channel> { db.Channels.First(channel => channel.Id == channelId) }
                 });
 
-                db.SaveChanges();
-                return PartialView(db.Channels.First(channel => channel.Id == channelId));
+                db.SaveChanges();                
+                return RedirectToAction("Channel", "Channel", db.Channels.First(channel => channel.Id == channelId).User.UserName);
             }
 
             var sub = subs.Channels.FirstOrDefault(channel => channel.Id == channelId);
@@ -99,19 +100,22 @@ namespace Videohosting.Controllers
                 subs.Channels.Add(db.Channels.First(channel => channel.Id == channelId));
             }
 
-            db.SaveChanges();
-            return PartialView(db.Channels.First(channel => channel.Id == channelId));
+            db.SaveChanges();            
+            return RedirectToAction("Channel", "Channel", db.Channels.First(channel => channel.Id == channelId).User.UserName);
         }
-
-        [Authorize(Roles = "User")]
+        
         public ActionResult Unsubscribe(string userName, int channelId)
         {
+            var isAuthorized = CheckIfAuthorized();
+            if (isAuthorized != null)
+                return isAuthorized;
+
             ViewBag.IsSubscribed = false;
             var db = new ApplicationDbContext();
             var subs = db.Subscriptions.FirstOrDefault(subscription => subscription.Subscriber.User.UserName == userName);
             if (subs == null)
-            {
-                return PartialView("Subscribe", db.Channels.First(channel => channel.Id == channelId));                
+            {                                
+                return RedirectToAction("Channel", "Channel", db.Channels.First(channel => channel.Id == channelId).User.UserName);
             }
             var sub = subs.Channels.FirstOrDefault(channel => channel.Id == channelId);
             if (sub != null)
@@ -119,8 +123,8 @@ namespace Videohosting.Controllers
                 subs.Channels.Remove(sub);
             }
 
-            db.SaveChanges();
-            return PartialView("Subscribe", db.Channels.First(channel => channel.Id == channelId));
+            db.SaveChanges();            
+            return RedirectToAction("Channel", "Channel", db.Channels.First(channel => channel.Id == channelId).User.UserName);
         }
         
         public ActionResult ViewMore(string userName)
@@ -166,6 +170,16 @@ namespace Videohosting.Controllers
             _currentPage = 0;
             _currentComparer = new LikeComparer();
             return PartialView("_DisplayVideos", GetItemsPage(userName, _currentComparer).Videos.ToList());
-        }        
+        }
+
+        private ActionResult CheckIfAuthorized()
+        {
+            if (!System.Web.HttpContext.Current.User.IsInRole("User"))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            return null;
+        }
     }
 }

@@ -5,24 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
-
-<script>
-    $(document).ready(function () {        
-        $("#sub-button").load("@Url.Action("CheckSubscription", "Channel", new { userName = HttpContext.Current.User.Identity.Name, channelId = Model.Id })");
-    });
-</script>
-
 <div class="container">
     <div class="jumbotron">
         <h2 align="center" style="margin-top: -10px">@(Model.User.UserName)'s channel</h2>
         <br />
-        <div id="sub-button" align="center" style="margin-top: -15px">
-            @using (Ajax.BeginForm("CheckSubscription", new AjaxOptions { UpdateTargetId = "sub-button", InsertionMode = InsertionMode.Replace }))
+        <div id="sub-button" align="center" style="margin-top: -15px">            
+            @if (!ViewBag.IsSubscribed)
             {
-                <input type="hidden" name="channelId" value="@Model.Id" />
-                <input type="hidden" name="userName" value="@User.Identity.Name" />                
+                using (Ajax.BeginForm("Subscribe", new AjaxOptions { UpdateTargetId = "sub-button", InsertionMode = InsertionMode.Replace }))
+                {   
+                    <input type="hidden" name="channelId" value="@Model.Id"/>
+                    <input type="hidden" name="userName" value="@User.Identity.Name"/>
+                    <input type="submit" class="btn btn-success" value="Subscribe" />
+                }
             }
+            else
+            {
+                using (Ajax.BeginForm("Unsubscribe", new AjaxOptions { UpdateTargetId = "sub-button", InsertionMode = InsertionMode.Replace }))
+                {   
+                    <input type="hidden" name="channelId" value="@Model.Id"/>
+                    <input type="hidden" name="userName" value="@User.Identity.Name"/>
+                    <input type="submit" class="btn btn-success" value="Unsubscribe" />
+                }
+            }                        
         </div>
     </div>
 </div>
