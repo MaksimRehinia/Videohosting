@@ -90,7 +90,7 @@ namespace Videohosting.Controllers
                 });
 
                 db.SaveChanges();                
-                return RedirectToAction("Channel", "Channel", db.Channels.First(channel => channel.Id == channelId).User.UserName);
+                return RedirectToAction("Channel", "Channel", new { userName = db.Channels.First(channel => channel.Id == channelId).User.UserName });
             }
 
             var sub = subs.Channels.FirstOrDefault(channel => channel.Id == channelId);
@@ -101,7 +101,7 @@ namespace Videohosting.Controllers
             }
 
             db.SaveChanges();            
-            return RedirectToAction("Channel", "Channel", db.Channels.First(channel => channel.Id == channelId).User.UserName);
+            return RedirectToAction("Channel", "Channel", new { userName = db.Channels.First(channel => channel.Id == channelId).User.UserName });
         }
         
         public ActionResult Unsubscribe(string userName, int channelId)
@@ -115,7 +115,7 @@ namespace Videohosting.Controllers
             var subs = db.Subscriptions.FirstOrDefault(subscription => subscription.Subscriber.User.UserName == userName);
             if (subs == null)
             {                                
-                return RedirectToAction("Channel", "Channel", db.Channels.First(channel => channel.Id == channelId).User.UserName);
+                return RedirectToAction("Channel", "Channel", new { userName = db.Channels.First(channel => channel.Id == channelId).User.UserName });
             }
             var sub = subs.Channels.FirstOrDefault(channel => channel.Id == channelId);
             if (sub != null)
@@ -124,7 +124,7 @@ namespace Videohosting.Controllers
             }
 
             db.SaveChanges();            
-            return RedirectToAction("Channel", "Channel", db.Channels.First(channel => channel.Id == channelId).User.UserName);
+            return RedirectToAction("Channel", "Channel", new { userName = db.Channels.First(channel => channel.Id == channelId).User.UserName });
         }
         
         public ActionResult ViewMore(string userName)

@@ -11,20 +11,20 @@
         <br />
         <div id="sub-button" align="center" style="margin-top: -15px">            
             @if (!ViewBag.IsSubscribed)
-            {
-                using (Ajax.BeginForm("Subscribe", new AjaxOptions { UpdateTargetId = "sub-button", InsertionMode = InsertionMode.Replace }))
-                {   
-                    <input type="hidden" name="channelId" value="@Model.Id"/>
-                    <input type="hidden" name="userName" value="@User.Identity.Name"/>
+            {                
+                using (Html.BeginForm("Subscribe", "Channel", FormMethod.Post))
+                {
+                    <input type="hidden" name="channelId" value="@Model.Id" />
+                    <input type="hidden" name="userName" value="@User.Identity.Name" />
                     <input type="submit" class="btn btn-success" value="Subscribe" />
                 }
             }
             else
-            {
-                using (Ajax.BeginForm("Unsubscribe", new AjaxOptions { UpdateTargetId = "sub-button", InsertionMode = InsertionMode.Replace }))
-                {   
-                    <input type="hidden" name="channelId" value="@Model.Id"/>
-                    <input type="hidden" name="userName" value="@User.Identity.Name"/>
+            {               
+                using (Html.BeginForm("Unsubscribe", "Channel", FormMethod.Post))
+                {
+                    <input type="hidden" name="channelId" value="@Model.Id" />
+                    <input type="hidden" name="userName" value="@User.Identity.Name" />
                     <input type="submit" class="btn btn-success" value="Unsubscribe" />
                 }
             }                        
